@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevLearn - Front-end Completo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            color: white;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2em;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .tab-btn.active {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .content-area {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            color: #4a5568;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .tag-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .tag-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid #007bff;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .tag-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .tag-name {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .tag-description {
+            color: #4a5568;
+            margin-bottom: 15px;
+        }
+
+        .code-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        .live-preview {
+            background: #f7fafc;
+            border: 2px dashed #cbd5e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .css-property {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-left-color: #38b2ac;
+        }
+
+        .js-method {
+            background: linear-gradient(135deg, #fffaf0 0%, #fbd38d 100%);
+            border-left-color: #ed8936;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            font-size: 16px;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .interactive-editor {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .editor-panel {
+            background: #2d3748;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .editor-header {
+            background: #4a5568;
+            color: white;
+            padding: 10px 15px;
+            font-weight: bold;
+        }
+
+        .editor-content {
+            height: 300px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100%;
+            background: #2d3748;
+            color: #e2e8f0;
+            border: none;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: none;
+            outline: none;
+        }
+
+        .preview-frame {
+            width: 100%;
+            height: 300px;
+            border: none;
+            background: white;
+        }
+
+        .category-nav {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background: #e2e8f0;
+            color: #4a5568;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .interactive-editor {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .content-area {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 DevLearn</h1>
+            <p class="subtitle">Aprenda Front-end do Básico ao Avançado</p>
+        </header>
+
+        <nav class="nav-tabs">
+            <button class="tab-btn active" onclick="showTab('html')">HTML</button>
+            <button class="tab-btn" onclick="showTab('css')">CSS</button>
+            <button class="tab-btn" onclick="showTab('javascript')">JavaScript</button>
+            <button class="tab-btn" onclick="showTab('glossary')">📚 Glossário</button>
+            <button class="tab-btn" onclick="showTab('playground')">Playground</button>
+        </nav>
+
+        <div class="content-area">
+            <!-- HTML Tab -->
+            <div id="html" class="tab-content active">
+                <h2 class="section-title">📝 HTML - HyperText Markup Language</h2>
+                <input type="text" class="search-box" placeholder="Buscar tags HTML..." onkeyup="filterContent('html', this.value)">
+                
+                <div class="category-nav">
+                    <button class="category-btn active" onclick="filterCategory('html', 'all')">Todas</button>
+                    <button class="category-btn" onclick="filterCategory('html', 'structure')">Estrutura</button>
+                    <button class="category-btn" onclick="filterCategory('html', 'text')">Texto</button>
+                    <button class="category-btn" onclick="filterCategory('html', 'media')">Mídia</button>
+                    <button class="category-btn" onclick="filterCategory('html', 'form')">Formulários</button>
+                </div>
+
+                <div class="tag-grid" id="html-content">
+                    <div class="tag-card" data-category="structure">
+                        <div class="tag-name">&lt;html&gt;</div>
+                        <div class="tag-description">Elemento raiz de uma página HTML</div>
+                        <div class="code-example">&lt;html lang="pt-BR"&gt;
+  &lt;head&gt;...&lt;/head&gt;
+  &lt;body&gt;...&lt;/body&gt;
+&lt;/html&gt;</div>
+                    </div>
+
+                    <div class="tag-card" data-category="structure">
+                        <div class="tag-name">&lt;head&gt;</div>
+                        <div class="tag-description">Contém metadados sobre o documento</div>
+                        <div class="code-example">&lt;head&gt;
+  &lt;title&gt;Título da Página&lt;/title&gt;
+  &lt;meta charset="UTF-8"&gt;
+&lt;/head&gt;</div>
+                    </div>
+
+                    <div class="tag-card" data-category="structure">
+                        <div class="tag-name">&lt;body&gt;</div>
+                        <div class="tag-description">Contém todo o conteúdo visível da página</div>
+                        <div class="code-example">&lt;body&gt;
+  &lt;h1&gt;Conteúdo da página&lt;/h1&gt;
+&lt;/body&gt;</div>
+                    </div>
+
+                    <div class="tag-card" data-category="text">
+                        <div class="tag-name">&lt;h1&gt; - &lt;h6&gt;</div>
+                        <div class="tag-description">Títulos e subtítulos hierárquicos</div>
+                        <div class="code-example">&lt;h1&gt;Título Principal&lt;/h1&gt;
+&lt;h2&gt;Subtítulo&lt;/h2&gt;
+&lt;h3&gt;Sub-subtítulo&lt;/h3&gt;</div>
+                        <div class="live-preview">
+                            <h1>Título Principal</h1>
+                            <h2>Subtítulo</h2>
+                            <h3>Sub-subtítulo</h3>
+                        </div>
+                    </div>
+
+                    <div class="tag-card" data-category="text">
+                        <div class="tag-name">&lt;p&gt;</div>
+                        <div class="tag-description">Parágrafo de texto</div>
+                        <div class="code-example">&lt;p&gt;Este é um parágrafo de texto.&lt;/p&gt;</div>
+                        <div class="live-preview">
+                            <p>Este é um parágrafo de texto.</p>
+                        </div>
+                    </div>
+
+                    <div class="tag-card" data-category="text">
+                        <div class="tag-name">&lt;a&gt;</div>
+                        <div class="tag-description">Link para outras páginas ou recursos</div>
+                        <div class="code-example">&lt;a href="https://google.com"&gt;Google&lt;/a&gt;
+&lt;a href="#secao"&gt;Link interno&lt;/a&gt;</div>
+                        <div class="live-preview">
+                            <a href="#" style="color: #007bff;">Link de exemplo</a>
+                        </div>
+                    </div>
+
+                    <div class="tag-card" data-category="media">
+                        <div class="tag-name">&lt;img&gt;</div>
+                        <div class="tag-description">Exibe imagens</div>
+                        <div class="code-example">&lt;img src="imagem.jpg" alt="Descrição da imagem"&gt;</div>
+                    </div>
+
+                    <div class="tag-card" data-category="form">
+                        <div class="tag-name">&lt;form&gt;</div>
+                        <div class="tag-description">Formulário para entrada de dados</div>
+                        <div class="code-example">&lt;form action="/enviar" method="post"&gt;
+  &lt;input type="text" name="nome"&gt;
+  &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;</div>
+                    </div>
+
+                    <div class="tag-card" data-category="form">
+                        <div class="tag-name">&lt;input&gt;</div>
+                        <div class="tag-description">Campo de entrada de dados</div>
+                        <div class="code-example">&lt;input type="text" placeholder="Digite seu nome"&gt;
+&lt;input type="email" required&gt;
+&lt;input type="password"&gt;</div>
+                    </div>
+
+                    <div class="tag-card" data-category="structure">
+                        <div class="tag-name">&lt;div&gt;</div>
+                        <div class="tag-description">Container genérico para agrupamento</div>
+                        <div class="code-example">&lt;div class="container"&gt;
+  &lt;p&gt;Conteúdo agrupado&lt;/p&gt;
+&lt;/div&gt;</div>
+                    </div>
+
+                    <div class="tag-card" data-category="text">
+                        <div class="tag-name">&lt;span&gt;</div>
+                        <div class="tag-description">Container inline para estilização</div>
+                        <div class="code-example">&lt;p&gt;Texto &lt;span style="color: red;"&gt;colorido&lt;/span&gt;&lt;/p&gt;</div>
+                    </div>
+
+                    <div class="tag-card" data-category="structure">
+                        <div class="tag-name">&lt;ul&gt; / &lt;ol&gt; / &lt;li&gt;</div>
+                        <div class="tag-description">Listas não ordenadas, ordenadas e itens</div>
+                        <div class="code-example">&lt;ul&gt;
+  &lt;li&gt;Item 1&lt;/li&gt;
+  &lt;li&gt;Item 2&lt;/li&gt;
+&lt;/ul&gt;</div>
+                        <div class="live-preview">
+                            <ul>
+                                <li>Item 1</li>
+                                <li>Item 2</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CSS Tab -->
+            <div id="css" class="tab-content">
+                <h2 class="section-title">🎨 CSS - Cascading Style Sheets</h2>
+                <input type="text" class="search-box" placeholder="Buscar propriedades CSS..." onkeyup="filterContent('css', this.value)">
+                
+                <div class="category-nav">
+                    <button class="category-btn active" onclick="filterCategory('css', 'all')">Todas</button>
+                    <button class="category-btn" onclick="filterCategory('css', 'layout')">Layout</button>
+                    <button class="category-btn" onclick="filterCategory('css', 'text')">Texto</button>
+                    <button class="category-btn" onclick="filterCategory('css', 'color')">Cores</button>
+                    <button class="category-btn" onclick="filterCategory('css', 'animation')">Animação</button>
+                </div>
+
+                <div class="tag-grid" id="css-content">
+                    <div class="tag-card css-property" data-category="color">
+                        <div class="tag-name">color</div>
+                        <div class="tag-description">Define a cor do texto</div>
+                        <div class="code-example">color: red;
+color: #ff0000;
+color: rgb(255, 0, 0);
+color: hsl(0, 100%, 50%);</div>
+                        <div class="live-preview">
+                            <p style="color: red;">Texto vermelho</p>
+                        </div>
+                    </div>
+
+                    <div class="tag-card css-property" data-category="color">
+                        <div class="tag-name">background-color</div>
+                        <div class="tag-description">Define a cor de fundo</div>
+                        <div class="code-example">background-color: blue;
+background-color: #0066cc;
+background-color: rgba(0, 100, 200, 0.5);</div>
+                        <div class="live-preview">
+                            <div style="background-color: lightblue; padding: 10px;">Fundo azul claro</div>
+                        </div>
+                    </div>
+
+                    <div class="tag-card css-property" data-category="text">
+                        <div class="tag-name">font-size</div>
+                        <div class="tag-description">Define o tamanho da fonte</div>
+                        <div class="code-example">font-size: 16px;
+font-size: 1.2em;
+font-size: 120%;
+font-size: 1.5rem;</div>
+                        <div class="live-preview">
+                            <p style="font-size: 20px;">Texto maior</p>
+                        </div>
+                    </div>
+
+                    <div class="tag-card css-property" data-category="text">
+                        <div class="tag-name">font-weight</div>
+                        <div class="tag-description">Define o peso/espessura da fonte</div>
+                        <div class="code-example">font-weight: normal;
+font-weight: bold;
+font-weight: 700;
+font-weight: lighter;</div>
+                        <div class="live-preview">
+                            <p style="font-weight: bold;">Texto em negrito</p>
+                        </div>
+                    </div>
+
+                    <div class="tag-card css-property" data-category="layout">
+                        <div class="tag-name">display</div>
+                        <div class="tag-description">Define como o elemento é exibido</div>
+                        <div class="code-example">display: block;
+display: inline;
+display: inline-block;
+display: flex;
+display: grid;</div>
+                    </div>
+
+                    <div class="tag-card css-property" data-category="layout">
+                        <div class="tag-name">margin</div>
+                        <div class="tag-description">Espaçamento externo do elemento</div>
+                        <div class="code-example">margin: 10px;
+margin: 10px 20px;
+margin: 10px 20px 15px 5px;
+margin-top: 10px;</div>
+                    </div>
+
+                    <div class="tag-card css-property" data-category="layout">
+                        <div class="tag-name">padding</div>
+                        <div class="tag-description">Espaçamento interno do elemento</div>
+                        <div class="code-example">padding: 15px;
+padding: 10px 20px;
+padding: 5px 10px 15px 20px;
+padding-left: 25px;</div>
+                    </div>
+
+                    <div class="tag-card css-property" data-category="layout">
+                        <div class="tag-name">border</div>
+                        <div class="tag-description">Borda do elemento</div>
+                        <div class="code-example">border: 1px solid black;
+border: 2px dashed red;
+border-radius: 5px;
+border-top: 3px solid blue;</div>
+                        <div class="live-preview">
+                            <div style="border: 2px solid #333; padding: 10px; border-radius: 5px;">Elemento com borda</div>
+                        </div>
+                    </div>
+
+                    <div class="tag-card css-property" data-category="layout">
+                        <div class="tag-name">position</div>
+                        <div class="tag-description">Define o posicionamento do elemento</div>
+                        <div class="code-example">position: static;
+position: relative;
+position: absolute;
+position: fixed;
+position: sticky;</div>
+                    </div>
+
+                    <div class="tag-card css-property" data-category="animation">
+                        <div class="tag-name">transition</div>
+                        <div class="tag-description">Animação suave entre estados</div>
+                        <div class="code-example">transition: all 0.3s ease;
+transition: color 0.5s;
+transition: transform 0.2s ease-in-out;</div>
+                    </div>
+
+                    <div class="tag-card css-property" data-category="animation">
+                        <div class="tag-name">transform</div>
+                        <div class="tag-description">Transformações 2D e 3D</div>
+                        <div class="code-example">transform: rotate(45deg);
+transform: scale(1.2);
+transform: translate(10px, 20px);
+transform: skew(15deg);</div>
+                    </div>
+
+                    <div class="tag-card css-property" data-category="layout">
+                        <div class="tag-name">flexbox</div>
+                        <div class="tag-description">Layout flexível</div>
+                        <div class="code-example">display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JavaScript Tab -->
+            <div id="javascript" class="tab-content">
+                <h2 class="section-title">⚡ JavaScript - Linguagem de Programação</h2>
+                <input type="text" class="search-box" placeholder="Buscar métodos JavaScript..." onkeyup="filterContent('javascript', this.value)">
+                
+                <div class="category-nav">
+                    <button class="category-btn active" onclick="filterCategory('javascript', 'all')">Todos</button>
+                    <button class="category-btn" onclick="filterCategory('javascript', 'dom')">DOM</button>
+                    <button class="category-btn" onclick="filterCategory('javascript', 'array')">Arrays</button>
+                    <button class="category-btn" onclick="filterCategory('javascript', 'string')">Strings</button>
+                    <button class="category-btn" onclick="filterCategory('javascript', 'event')">Eventos</button>
+                </div>
+
+                <div class="tag-grid" id="javascript-content">
+                    <div class="tag-card js-method" data-category="dom">
+                        <div class="tag-name">document.getElementById()</div>
+                        <div class="tag-description">Seleciona elemento pelo ID</div>
+                        <div class="code-example">const elemento = document.getElementById('meuId');
+elemento.textContent = 'Novo texto';</div>
+                    </div>
+
+                    <div class="tag-card js-method" data-category="dom">
+                        <div class="tag-name">document.querySelector()</div>
+                        <div class="tag-description">Seleciona primeiro elemento que corresponde ao seletor</div>
+                        <div class="code-example">const elemento = document.querySelector('.classe');
+const botao = document.querySelector('#botao');</div>
+                    </div>
+
+                    <div class="tag-card js-method" data-category="dom">
+                        <div class="tag-name">addEventListener()</div>
+                        <div class="tag-description">Adiciona ouvinte de evento</div>
+                        <div class="code-example">elemento.addEventListener('click', function() {
+    alert('Clicado!');
+});</div>
+                    </div>
+
+                    <div class="tag-card js-method" data-category="array">
+                        <div class="tag-name">Array.map()</div>
+                        <div class="tag-description">Cria novo array transformando cada elemento</div>
+                        <div class="code-example">const numeros = [1, 2, 3, 4];
+const dobrados = numeros.map(n => n * 2);
+// [2, 4, 6, 8]</div>
+                    </div>
+
+                    <div class="tag-card js-method" data-category="array">
+                        <div class="tag-name">Array.filter()</div>
+                        <div class="tag-description">Filtra elementos baseado em condição</div>
+                        <div class="code-example">const numeros = [1, 2, 3, 4, 5];
+const pares = numeros.filter(n => n % 2 === 0);
+// [2, 4]</div>
+                    </div>
+
+                    <div class="tag-card js-method" data-category="array">
+                        <div class="tag-name">Array.forEach()</div>
+                        <div class="tag-description">Executa função para cada elemento</div>
+                        <div class="code-example">const frutas = ['maçã', 'banana', 'laranja'];
+frutas.forEach(fruta => {
+    console.log(fruta);
+});</div>
+                    </div>
+
+                    <div class="tag-card js-method" data-category="string">
+                        <div class="tag-name">String.split()</div>
+                        <div class="tag-description">Divide string em array</div>
+                        <div class="code-example">const frase = "olá mundo";
+const palavras = frase.split(" ");
+// ["olá", "mundo"]</div>
+                    </div>
+
+                    <div class="tag-card js-method" data-category="string">
+                        <div class="tag-name">String.includes()</div>
+                        <div class="tag-description">Verifica se string contém substring</div>
+                        <div class="code-example">const texto = "JavaScript é incrível";
+const contem = texto.includes("Script");
+// true</div>
+                    </div>
+
+                    <div class="tag-card js-method" data-category="event">
+                        <div class="tag-name">preventDefault()</div>
+                        <div class="tag-description">Previne comportamento padrão do evento</div>
+                        <div class="code-example">form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    // Processa form sem recarregar página
+});</div>
+                    </div>
+
+                    <div class="tag-card js-method" data-category="dom">
+                        <div class="tag-name">createElement()</div>
+                        <div class="tag-description">Cria novo elemento HTML</div>
+                        <div class="code-example">const div = document.createElement('div');
+div.textContent = 'Novo elemento';
+document.body.appendChild(div);</div>
+                    </div>
+
+                    <div class="tag-card js-method" data-category="dom">
+                        <div class="tag-name">classList</div>
+                        <div class="tag-description">Manipula classes CSS do elemento</div>
+                        <div class="code-example">elemento.classList.add('ativa');
+elemento.classList.remove('inativa');
+elemento.classList.toggle('visivel');</div>
+                    </div>
+
+                    <div class="tag-card js-method" data-category="array">
+                        <div class="tag-name">Array.reduce()</div>
+                        <div class="tag-description">Reduz array a um único valor</div>
+                        <div class="code-example">const numeros = [1, 2, 3, 4];
+const soma = numeros.reduce((acc, n) => acc + n, 0);
+// 10</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Glossário Tab -->
+            <div id="glossary" class="tab-content">
+                <h2 class="section-title">📚 Glossário - Termos Essenciais</h2>
+                <p style="text-align: center; margin-bottom: 30px; color: #4a5568;">Entenda os conceitos fundamentais do desenvolvimento front-end</p>
+                
+                <input type="text" class="search-box" placeholder="Buscar termos..." onkeyup="filterContent('glossary', this.value)">
+                
+                <div class="category-nav">
+                    <button class="category-btn active" onclick="filterCategory('glossary', 'all')">Todos</button>
+                    <button class="category-btn" onclick="filterCategory('glossary', 'html')">HTML</button>
+                    <button class="category-btn" onclick="filterCategory('glossary', 'css')">CSS</button>
+                    <button class="category-btn" onclick="filterCategory('glossary', 'js')">JavaScript</button>
+                    <button class="category-btn" onclick="filterCategory('glossary', 'general')">Geral</button>
+                </div>
+
+                <div class="tag-grid" id="glossary-content">
+                    <!-- JavaScript/Programming Terms -->
+                    <div class="tag-card js-method" data-category="js">
+                        <div class="tag-name">Array</div>
+                        <div class="tag-description">Uma estrutura de dados que armazena múltiplos valores em uma única variável, organizados por índices (posições). É como uma lista ordenada de elementos.</div>
+                        <div class="code-example">const frutas = ['maçã', 'banana', 'laranja'];
+console.log(frutas[0]); // 'maçã'
+console.log(frutas.length); // 3</div>
+                        <div class="live-preview">
+                            <strong>Exemplo prático:</strong> Uma lista de tarefas, galeria de fotos, carrinho de compras
+                        </div>
+                    </div>
+
+                    <div class="tag-card js-method" data-category="js">
+                        <div class="tag-name">String</div>
+                        <div class="tag-description">Tipo de dado que representa texto. É uma sequência de caracteres entre aspas simples (''), duplas ("") ou crases (``).</div>
+                        <div class="code-example">const nome = "João";
+const sobrenome = 'Silva';
+const nomeCompleto = `${nome} ${sobrenome}`;
+console.log(nomeCompleto); // "João Silva"</div>
+                        <div class="live-preview">
+                            <strong>Exemplo prático:</strong> Nomes, endereços, mensagens, títulos de páginas
+                        </div>
+                    </div>
+
+                    <div class="tag-card js-method" data-category="js">
+                        <div class="tag-name">DOM</div>
+                        <div class="tag-description">Document Object Model - Representação estruturada do HTML que permite ao JavaScript acessar e modificar elementos da página em tempo real.</div>
+                        <div class="code-example">// Acessar elemento
+const titulo = document.getElementById('titulo');
+
+// Modificar conteúdo
+titulo.textContent = 'Novo título';
+
+// Adicionar evento
+titulo.addEventListener('click', função);</div>
+                        <div class="live-preview">
+                            <strong>Exemplo prático:</strong> Mudar texto ao clicar, validar formulários, criar animações
+                        </div>
+                    </div>
+
+                    <div class="tag-card js-method" data-category="js">
+                        <div class="tag-name">Função</div>
+                        <div class="tag-description">Bloco de código reutilizável que executa uma tarefa específica. Pode receber parâmetros e retornar valores.</div>
+                        <div class="code-example">// Declaração de função
+function somar(a, b) {
+    return a + b;
+}
+
+// Chamada da função
+const resultado = somar(5, 3); // 8</div>
+                        <div class="live-preview">
+                            <strong>Exemplo prático:</strong> Calcular preços, validar dados, enviar formulários
+                        </div>
+                    </div>
+
+                    <div class="tag-card js-method" data-category="js">
+                        <div class="tag-name">Variável</div>
+                        <div class="tag-description">Container que armazena dados/valores que podem ser utilizados e modificados durante a execução do programa.</div>
+                        <div class="code-example">let idade = 25;        // Pode ser alterada
+const nome = "Ana";     // Constante (não muda)
+var cidade = "SP";      // Forma antiga (evitar)
+
+idade = 26; // OK
+// nome = "João"; // ERRO!</div>
+                        <div class="live-preview">
+                            <strong>let:</strong> valores que mudam | <strong>const:</strong> valores fixos
+                        </div>
+                    </div>
+
+                    <div class="tag-card js-method" data-category="js">
+                        <div class="tag-name">Evento</div>
+                        <div class="tag-description">Ação que acontece na página (clique, digitação, movimento do mouse) que pode disparar código JavaScript.</div>
+                        <div class="code-example">// Evento de clique
+botao.addEventListener('click', function() {
+    alert('Botão clicado!');
+});
+
+// Evento de digitação
+input.addEventListener('input', verificarTexto);</div>
+                        <div class="live-preview">
+                            <strong>Tipos:</strong> click, submit, keypress, mouseover, load, scroll
+                        </div>
+                    </div>
+
+                    <!-- CSS Terms -->
+                    <div class="tag-card css-property" data-category="css">
+                        <div class="tag-name">Seletor</div>
+                        <div class="tag-description">Padrão usado para selecionar elementos HTML que receberão estilos CSS. Define "onde" aplicar as regras de estilo.</div>
+                        <div class="code-example">/* Seletor de tag */
+h1 { color: blue; }
+
+/* Seletor de classe */
+.destaque { background: yellow; }
+
+/* Seletor de ID */
+#cabecalho { font-size: 24px; }</div>
+                        <div class="live-preview">
+                            <strong>Tipos:</strong> tag, .classe, #id, [atributo], :hover
+                        </div>
+                    </div>
+
+                    <div class="tag-card css-property" data-category="css">
+                        <div class="tag-name">Propriedade</div>
+                        <div class="tag-description">Característica de estilo que você quer modificar em um elemento (cor, tamanho, posição, etc.). Sempre seguida de dois pontos (:) e um valor.</div>
+                        <div class="code-example">p {
+    color: red;           /* propriedade: valor */
+    font-size: 16px;      /* propriedade: valor */
+    margin: 10px;         /* propriedade: valor */
+}</div>
+                        <div class="live-preview">
+                            <strong>Exemplos:</strong> color, font-size, background, margin, padding, border
+                        </div>
+                    </div>
+
+                    <div class="tag-card css-property" data-category="css">
+                        <div class="tag-name">Box Model</div>
+                        <div class="tag-description">Conceito que define como os elementos HTML ocupam espaço na página. Cada elemento é uma "caixa" com conteúdo, padding, border e margin.</div>
+                        <div class="code-example">div {
+    width: 200px;         /* largura do conteúdo */
+    padding: 20px;        /* espaço interno */
+    border: 2px solid;    /* borda */
+    margin: 10px;         /* espaço externo */
+}</div>
+                        <div class="live-preview">
+                            <strong>Ordem:</strong> Conteúdo → Padding → Border → Margin
+                        </div>
+                    </div>
+
+                    <div class="tag-card css-property" data-category="css">
+                        <div class="tag-name">Flexbox</div>
+                        <div class="tag-description">Sistema de layout CSS que facilita o alinhamento e distribuição de elementos em uma linha ou coluna de forma flexível.</div>
+                        <div class="code-example">.container {
+    display: flex;
+    justify-content: center;  /* alinha horizontal */
+    align-items: center;      /* alinha vertical */
+    flex-direction: row;      /* direção dos itens */
+}</div>
+                        <div class="live-preview">
+                            <strong>Uso:</strong> Centralizar conteúdo, criar layouts responsivos, organizar elementos
+                        </div>
+                    </div>
+
+                    <!-- HTML Terms -->
+                    <div class="tag-card" data-category="html">
+                        <div class="tag-name">Tag</div>
+                        <div class="tag-description">Elemento HTML delimitado por colchetes angulares (&lt; &gt;) que define a estrutura e o significado do conteúdo na página.</div>
+                        <div class="code-example">&lt;h1&gt;Título Principal&lt;/h1&gt;
+&lt;p&gt;Parágrafo de texto&lt;/p&gt;
+&lt;img src="foto.jpg" alt="Descrição"&gt;
+&lt;a href="link.html"&gt;Link&lt;/a&gt;</div>
+                        <div class="live-preview">
+                            <strong>Tipos:</strong> Tags de abertura/fechamento, tags auto-fechantes
+                        </div>
+                    </div>
+
+                    <div class="tag-card" data-category="html">
+                        <div class="tag-name">Atributo</div>
+                        <div class="tag-description">Informação adicional fornecida dentro da tag de abertura que modifica o comportamento ou aparência do elemento.</div>
+                        <div class="code-example">&lt;img src="imagem.jpg" alt="Descrição" width="300"&gt;
+&lt;a href="https://google.com" target="_blank"&gt;
+&lt;div class="container" id="principal"&gt;</div>
+                        <div class="live-preview">
+                            <strong>Comuns:</strong> src, href, class, id, alt, width, height
+                        </div>
+                    </div>
+
+                    <div class="tag-card" data-category="html">
+                        <div class="tag-name">Elemento</div>
+                        <div class="tag-description">Componente completo formado por tag de abertura, conteúdo e tag de fechamento (quando aplicável). É a unidade básica do HTML.</div>
+                        <div class="code-example">&lt;!-- Elemento completo --&gt;
+&lt;h1 class="titulo"&gt;Meu Título&lt;/h1&gt;
+
+&lt;!-- Elemento auto-fechante --&gt;
+&lt;br&gt;
+&lt;hr&gt;</div>
+                        <div class="live-preview">
+                            <strong>Partes:</strong> Tag abertura + Conteúdo + Tag fechamento
+                        </div>
+                    </div>
+
+                    <!-- General Terms -->
+                    <div class="tag-card" data-category="general" style="background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%); border-left-color: #4169e1;">
+                        <div class="tag-name">Front-end</div>
+                        <div class="tag-description">Parte de uma aplicação web que o usuário vê e interage diretamente. Inclui design, interface, experiência do usuário e interações.</div>
+                        <div class="code-example">Tecnologias principais:
+- HTML (estrutura)
+- CSS (aparência)  
+- JavaScript (interatividade)
+- Frameworks: React, Vue, Angular</div>
+                        <div class="live-preview">
+                            <strong>Oposto:</strong> Back-end (servidor, banco de dados, lógica interna)
+                        </div>
+                    </div>
+
+                    <div class="tag-card" data-category="general" style="background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%); border-left-color: #4169e1;">
+                        <div class="tag-name">API</div>
+                        <div class="tag-description">Application Programming Interface - Conjunto de regras e protocolos que permite diferentes aplicações se comunicarem entre si.</div>
+                        <div class="code-example">// Exemplo de uso de API
+fetch('https://api.exemplo.com/dados')
+  .then(response => response.json())
+  .then(dados => console.log(dados));</div>
+                        <div class="live-preview">
+                            <strong>Exemplo:</strong> Buscar dados do clima, integrar com redes sociais, pagamentos
+                        </div>
+                    </div>
+
+                    <div class="tag-card" data-category="general" style="background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%); border-left-color: #4169e1;">
+                        <div class="tag-name">Framework</div>
+                        <div class="tag-description">Conjunto de ferramentas, bibliotecas e convenções que facilita o desenvolvimento, fornecendo uma base estruturada para construir aplicações.</div>
+                        <div class="code-example">Exemplos populares:
+- React (JavaScript)
+- Bootstrap (CSS)
+- jQuery (JavaScript - biblioteca)
+- Tailwind CSS (CSS)</div>
+                        <div class="live-preview">
+                            <strong>Vantagem:</strong> Acelera desenvolvimento, código mais organizado
+                        </div>
+                    </div>
+
+                    <div class="tag-card" data-category="general" style="background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%); border-left-color: #4169e1;">
+                        <div class="tag-name">Responsivo</div>
+                        <div class="tag-description">Design que se adapta automaticamente a diferentes tamanhos de tela (desktop, tablet, celular), proporcionando boa experiência em qualquer dispositivo.</div>
+                        <div class="code-example">/* Media Queries para responsividade */
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    padding: 10px;
+  }
+}</div>
+                        <div class="live-preview">
+                            <strong>Técnicas:</strong> Media queries, Flexbox, Grid, unidades relativas (%, em, rem)
+                        </div>
+                    </div>
+
+                    <div class="tag-card" data-category="general" style="background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%); border-left-color: #4169e1;">
+                        <div class="tag-name">Debugging</div>
+                        <div class="tag-description">Processo de encontrar e corrigir erros (bugs) no código. Envolve testar, analisar e identificar problemas na aplicação.</div>
+                        <div class="code-example">// Ferramentas de debug
+console.log(variavel);     // Mostrar valores
+console.error(erro);       // Mostrar erros
+debugger;                  // Pausar execução
+
+// F12 no navegador = DevTools</div>
+                        <div class="live-preview">
+                            <strong>Ferramentas:</strong> Console do navegador, DevTools, breakpoints
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Playground Tab -->
+            <div id="playground" class="tab-content">
+                <h2 class="section-title">🎮 Playground - Teste seu código</h2>
+                <p style="text-align: center; margin-bottom: 30px; color: #4a5568;">Experimente HTML, CSS e JavaScript em tempo real!</p>
+                
+                <div class="interactive-editor">
+                    <div class="editor-panel">
+                        <div class="editor-header">HTML</div>
+                        <div class="editor-content">
+                            <textarea id="htmlEditor" placeholder="Digite seu HTML aqui..."><!DOCTYPE html>
+<html>
+<head>
+    <title>Meu Teste</title>
+</head>
+<body>
+    <h1>Olá Mundo!</h1>
+    <p>Este é meu primeiro teste</p>
+    <button onclick="mudarCor()">Clique aqui</button>
+</body>
+</html></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="editor-panel">
+                        <div class="editor-header">CSS</div>
+                        <div class="editor-content">
+                            <textarea id="cssEditor" placeholder="Digite seu CSS aqui...">body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    padding: 20px;
+    margin: 0;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+button {
+    background: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}</textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="editor-panel">
+                        <div class="editor-header">JavaScript</div>
+                        <div class="editor-content">
+                            <textarea id="jsEditor" placeholder="Digite seu JavaScript aqui...">function mudarCor() {
+    const cores = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7'];
+    const corAleatoria = cores[Math.floor(Math.random() * cores.length)];
+    document.body.style.background = corAleatoria;
+    
+    alert('Cor alterada para: ' + corAleatoria);
+}</textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="editor-panel">
+                        <div class="editor-header">Resultado</div>
+                        <div class="editor-content">
+                            <iframe id="previewFrame" class="preview-frame"></iframe>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin: 30px 0;">
+                    <button onclick="executarCodigo()" style="background: #667eea; color: white; border: none; padding: 15px 30px; border-radius: 25px; font-size: 16px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                        ▶️ Executar Código
+                    </button>
+                    <button onclick="limparCodigo()" style="background: #ff6b6b; color: white; border: none; padding: 15px 30px; border-radius: 25px; font-size: 16px; cursor: pointer; margin-left: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                        🗑️ Limpar Tudo
+                    </button>
+                </div>
+                
+                <div style="background: rgba(255,255,255,0.1); border-radius: 15px; padding: 25px; margin-top: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 15px;">💡 Dicas para o Playground:</h3>
+                    <ul style="color: #4a5568; line-height: 1.8;">
+                        <li>Experimente modificar as cores, fontes e tamanhos</li>
+                        <li>Teste diferentes eventos JavaScript (click, mouseover, etc.)</li>
+                        <li>Use console.log() para debugar seu código</li>
+                        <li>Combine HTML, CSS e JavaScript para criar interações</li>
+                        <li>Não se esqueça de clicar em "Executar Código" para ver as mudanças</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Função para alternar entre abas
+        function showTab(tabName) {
+            // Esconder todas as abas
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Remover classe ativa de todos os botões
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Mostrar aba selecionada
+            document.getElementById(tabName).classList.add('active');
+            
+            // Ativar botão correspondente
+            event.target.classList.add('active');
+        }
+
+        // Função para filtrar conteúdo
+        function filterContent(section, searchTerm) {
+            const cards = document.querySelectorAll(`#${section}-content .tag-card`);
+            const term = searchTerm.toLowerCase();
+            
+            cards.forEach(card => {
+                const name = card.querySelector('.tag-name').textContent.toLowerCase();
+                const description = card.querySelector('.tag-description').textContent.toLowerCase();
+                
+                if (name.includes(term) || description.includes(term)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Função para filtrar por categoria
+        function filterCategory(section, category) {
+            const cards = document.querySelectorAll(`#${section}-content .tag-card`);
+            const buttons = event.target.parentElement.querySelectorAll('.category-btn');
+            
+            // Atualizar botões ativos
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filtrar cards
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Funções do Playground
+        function executarCodigo() {
+            const htmlCode = document.getElementById('htmlEditor').value;
+            const cssCode = document.getElementById('cssEditor').value;
+            const jsCode = document.getElementById('jsEditor').value;
+            
+            const frame = document.getElementById('previewFrame');
+            const frameDoc = frame.contentDocument || frame.contentWindow.document;
+            
+            const fullCode = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <style>${cssCode}</style>
+                </head>
+                <body>
+                    ${htmlCode.replace(/<!DOCTYPE html>|<html>|<\/html>|<head>.*?<\/head>|<body>|<\/body>/gi, '')}
+                    <script>${jsCode}<\/script>
+                </body>
+                </html>
+            `;
+            
+            frameDoc.open();
+            frameDoc.write(fullCode);
+            frameDoc.close();
+        }
+
+        function limparCodigo() {
+            if (confirm('Tem certeza que deseja limpar todo o código?')) {
+                document.getElementById('htmlEditor').value = '';
+                document.getElementById('cssEditor').value = '';
+                document.getElementById('jsEditor').value = '';
+                
+                const frame = document.getElementById('previewFrame');
+                const frameDoc = frame.contentDocument || frame.contentWindow.document;
+                frameDoc.open();
+                frameDoc.write('<html><body><p style="text-align:center; color:#999; font-family:Arial;">Seu código aparecerá aqui...</p></body></html>');
+                frameDoc.close();
+            }
+        }
+
+        // Auto-executar código quando a página carregar
+        window.addEventListener('load', function() {
+            setTimeout(executarCodigo, 500);
+        });
+
+        // Adicionar efeitos de hover nos cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.tag-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+
+        // Efeito de digitação para os editores
+        document.addEventListener('DOMContentLoaded', function() {
+            const textareas = document.querySelectorAll('textarea');
+            
+            textareas.forEach(textarea => {
+                textarea.addEventListener('input', function() {
+                    this.style.height = 'auto';
+                    this.style.height = this.scrollHeight + 'px';
+                });
+            });
+        });
+    </script>
